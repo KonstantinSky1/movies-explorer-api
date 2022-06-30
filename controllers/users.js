@@ -22,7 +22,10 @@ const createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    .then((user) => res.send(user))
+    .then(() => res.send({
+      email,
+      name,
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new ConflictError('Данный емеил уже занят'));

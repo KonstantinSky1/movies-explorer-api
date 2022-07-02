@@ -82,6 +82,9 @@ const updateUser = (req, res, next) => {
   )
     .then((user) => res.send(user))
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError('Данный емеил уже занят'));
+      }
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Некорректные данные name или email'));
       }
